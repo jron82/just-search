@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Just Search</title>
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="favicon/favicon-32x32.png"
+    />
+    <style>
+      :root {
+        font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir,
+          segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto,
+          arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f4f9;
+        color: #000;
+      }
+
+      main {
+        margin: 0 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding-top: 15rem;
+      }
+
+      .search {
+        width: 100%;
+        max-width: 40rem;
+        margin-top: 2rem;
+      }
+
+      #search {
+        width: 100%;
+        height: 3.5rem;
+        font-size: 1.5rem;
+        padding: 0.2rem 1.5rem;
+        border: none;
+        border-radius: 0.5rem;
+        background-color: #fff;
+        border-color: hsla(212.3, 90%, 47.6%, 0.9);
+      }
+
+      .title {
+        margin: 0;
+        line-height: 1.15;
+        font-size: 4rem;
+        color: hsla(212.3, 100%, 47.6%, 0.9);
+      }
+    </style>
+    <script>
+      function parseQuery(input) {
+        const lower = input.trim().toLowerCase();
+        const parts = new Set(lower.split(" "));
+        const list = Array.from(parts).filter((r) => r.length > 0);
+
+        return list.join("+");
+      }
+
+      function navigate(query) {
+        const google = `https://www.google.com/search?q=${query}&sourceid=chrome&ie=UTF-8`;
+        window.open(google, "_self");
+      }
+
+      window.addEventListener("DOMContentLoaded", (event) => {
+        const search = document.getElementById("search");
+
+        search.addEventListener("keypress", (event) => {
+          let input = search.value;
+          let query = parseQuery(input);
+          console.log(query);
+
+          if (event.key === "Enter") {
+            navigate(query);
+          }
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <main>
+      <h1 class="title">Just Search!</h1>
+
+      <section class="search">
+        <input id="search" type="search" autofocus />
+      </section>
+    </main>
+  </body>
+</html>
